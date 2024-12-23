@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus - F2W Method</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://postimg.cc/YGRkBpH3') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px black;
+        }
+        main {
+            margin: 20px;
+            text-align: center;
+        }
+        .links {
+            margin: 20px 0;
+        }
+        .links a {
+            text-decoration: none;
+            color: white;
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #FF4500;
+            border-radius: 5px;
+            display: inline-block;
+            box-shadow: 2px 2px 10px black;
+        }
+        .links a:hover {
+            background-color: #FF6347;
+        }
+        .output {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            max-width: 600px;
+            text-align: left;
+            border-radius: 10px;
+            box-shadow: 2px 2px 15px black;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px black;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Nexus - F2W Method
+    </header>
+    <main>
+        <div class="links">
+            <a href="https://t.me/+lQynyvkYNxBlODM0" target="_blank">Join Telegram Channel</a>
+            <a href="https://chat.whatsapp.com/HNyUfyCDOSh0rnwrtiEWfF" target="_blank">Join WhatsApp Group</a>
+        </div>
+        <h2>Generate Random Credit Card Details</h2>
+        <button onclick="generateCard()">Generate Card</button>
+        <div class="output" id="output"></div>
+    </main>
+
+    <script>
+        function generateCard() {
+            const cardTypes = [
+                { type: "VISA", prefix: "4", length: 16 },
+                { type: "MasterCard", prefix: "5", length: 16 },
+                { type: "AMEX", prefix: "34", length: 15 },
+            ];
+            const banks = ["Chase Bank", "Bank of America", "Wells Fargo", "CitiBank", "HSBC", "Barclays"];
+            const countries = ["USA🇺🇸", "UK🇬🇧", "Canada🇨🇦", "Australia🇦🇺", "India🇮🇳", "Pakistan🇵🇰"];
+
+            // Randomly pick a card type
+            const cardType = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+
+            // Generate card number
+            let cardNumber = cardType.prefix;
+            for (let i = 0; i < cardType.length - cardType.prefix.length - 1; i++) {
+                cardNumber += Math.floor(Math.random() * 10);
+            }
+            cardNumber += calculateLuhnCheckDigit(cardNumber);
+
+            // Generate expiry date
+            const expiryMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, "0");
+            const expiryYear = new Date().getFullYear() + Math.floor(Math.random() * 5);
+
+            // Generate CVV
+            const cvv = String(Math.floor(Math.random() * 900) + 100);
+
+            // Generate other details
+            const bank = banks[Math.floor(Math.random() * banks.length)];
+            const country = countries[Math.floor(Math.random() * countries.length)];
+            const value = `$${Math.floor(Math.random() * 100) + 1}`;
+
+            // Display the card details
+            const output = `
+                <strong>𝗣𝗮𝘀𝘀𝗲𝗱 ✅</strong><br>
+                [-] Card Number : ${cardNumber}<br>
+                [-] Expiry : ${expiryMonth}/${expiryYear}<br>
+                [-] CVV : ${cvv}<br>
+                [-] Bank : ${bank}<br>
+                [-] Card Type : ${cardType.type}<br>
+                [-] Country : ${country}<br>
+                [-] Value : ${value}<br>
+                ============================<br>
+                [-] by : NeXus
+            `;
+            document.getElementById("output").innerHTML = output;
+        }
+
+        // Function to calculate Luhn check digit
+        function calculateLuhnCheckDigit(number) {
+            let sum = 0;
+            let shouldDouble = false;
+
+            for (let i = number.length - 1; i >= 0; i--) {
+                let digit = parseInt(number.charAt(i));
+
+                if (shouldDouble) {
+                    digit *= 2;
+                    if (digit > 9) digit -= 9;
+                }
+
+                sum += digit;
+                shouldDouble = !shouldDouble;
+            }
+
+            return (10 - (sum % 10)) % 10;
+        }
+    </script>
+</body>
+</html>
